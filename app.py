@@ -186,12 +186,12 @@ def hypothesis_test():
 
     # TODO 10: Calculate p-value based on test type
     if test_type == ">":
-        p_value = 1 - stats.norm.cdf(observed_stat)  # for a "greater than" test
+        p_value = np.mean(simulated_stats > observed_stat)  # for a "greater than" test
     elif test_type == "<":
-        p_value = stats.norm.cdf(observed_stat)  # for a "less than" test
+        p_value = np.mean(simulated_stats < observed_stat) # for a "less than" test
     elif test_type == "!=":
-        p_value = 2 * min(stats.norm.cdf(observed_stat), 1 - stats.norm.cdf(observed_stat))  # Two-tailed test
-    
+        p_value = np.mean((simulated_stats >= observed_stat) | (simulated_stats <= -observed_stat))
+  # Two-tailed test
 
     # TODO 11: If p_value is very small (e.g., <= 0.0001), set fun_message to a fun message
     if p_value <= 0.0001:
